@@ -1,10 +1,20 @@
-import properties from '@/properties'
+import { properties } from '@/properties';
 const PropertiesPage = () => {
   return (
-    <div>
-        
-    </div>
-  )
-}
+    <section class="px-4 py-6">
+      <div class="container-xl lg:container m-auto px-4 py-6">
+        {properties.length === 0 ? (
+          <p>No Properties Listed</p>
+        ) : (
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {properties.map((property) => (
+              <div>{property.name}</div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
 
-export default PropertiesPage
+export default PropertiesPage;

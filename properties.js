@@ -1,4 +1,4 @@
-[
+export const properties =[
     {
       "_id": "1",
       "owner": "1",
