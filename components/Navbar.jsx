@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/assets/images/logo-white.png';
@@ -6,6 +7,7 @@ import profileDefault from '@/assets/images/profile.png';
 import { FaGoogle } from 'react-icons/fa';
 
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobilMenuOpen] = useState(false);
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -19,6 +21,7 @@ const Navbar = () => {
               className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
+              onClick={() => setIsMobilMenuOpen((prev) => !prev)}
             >
               <span className="absolute -inset-0.5"></span>
               <span className="sr-only">Open main menu</span>
@@ -173,32 +176,34 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu, show/hide based on menu state. */}
-      <div className="hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          <Link
-            href="/"
-            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Home
-          </Link>
-          <Link
-            href="/properties"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Properties
-          </Link>
-          <Link
-            href="/add-property.html"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Add Property
-          </Link>
-          <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-            <FaGoogle className="text-white mr-2" />
-            <span>Login or Register</span>
-          </button>
+      {isMobileMenuOpen && (
+        <div id="mobile-menu">
+          <div className="space-y-1 px-2 pb-3 pt-2">
+            <Link
+              href="/"
+              className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+            >
+              Home
+            </Link>
+            <Link
+              href="/properties"
+              className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            >
+              Properties
+            </Link>
+            <Link
+              href="/add-property.html"
+              className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            >
+              Add Property
+            </Link>
+            <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+              <FaGoogle className="text-white mr-2" />
+              <span>Login or Register</span>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
