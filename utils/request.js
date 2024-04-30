@@ -43,4 +43,4 @@ async function fetchProperty(id) {
     }
   }
 
-export { fetchProperties };
+export { fetchProperties, fetchProperty };
