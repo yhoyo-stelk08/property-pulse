@@ -86,4 +86,4 @@ const PropertySchema = Schema(
   }
 );
 const Property = models.Property || model('Property', PropertySchema);
-export default User;
+export default Property;
