@@ -85,3 +85,5 @@ const PropertySchema = Schema(
     timestamps: true,
   }
 );
+const Property = models.Property || model('Property', PropertySchema);
+export default User;
