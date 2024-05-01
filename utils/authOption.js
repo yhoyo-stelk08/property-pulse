@@ -17,7 +17,7 @@ export const authOption = {
       },
     }),
   ],
-  callback: {
+  callbacks: {
     // invoked on successfull signin
     async signIn({ profile }) {
       console.log('from signIn');
@@ -55,7 +55,7 @@ export const authOption = {
       // 1. Get user from database
       const user = User.findOne({ email: session.user.email });
       // 2. Assign the user id to the session
-      session.user.id = user._id.toString();
+      session.user.id = user._id;
       // 3. Return the session
       return session;
     },

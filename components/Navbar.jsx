@@ -10,22 +10,22 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log('session: ', session)
   const [isMobileMenuOpen, setIsMobilMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
-
+  
   const pathname = usePathname();
-
+  
   useEffect(() => {
     const setAuthProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-
+    
     setAuthProviders();
   }, []);
-
+  
+  console.log(session);
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -126,7 +126,6 @@ const Navbar = () => {
           {/* Right Side Menu (Logged In) */}
           {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-              {console.log(session)}
               <Link href="messages.html" className="relative group">
                 <button
                   type="button"
@@ -203,6 +202,10 @@ const Navbar = () => {
                       Saved Properties
                     </Link>
                     <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        signOut();
+                      }}
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
@@ -252,7 +255,11 @@ const Navbar = () => {
             {!session &&
               Object.values(providers).map((provider, index) => {
                 return (
-                  <button onClick={() => signIn(provider.id)} key={index} className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+                  <button
+                    onClick={() => signIn(provider.id)}
+                    key={index}
+                    className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                  >
                     <FaGoogle className="text-white mr-2" />
                     <span>Login or Register</span>
                   </button>
