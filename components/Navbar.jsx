@@ -13,19 +13,19 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobilMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
-  
+
   const pathname = usePathname();
-  const profileImage = session?.user?.image
-  
+  const profileImage = session?.user?.image;
+
   useEffect(() => {
     const setAuthProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-    
+
     setAuthProviders();
   }, []);
-  
+
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -228,6 +228,7 @@ const Navbar = () => {
         <div id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <Link
+              onClick={() => setIsMobilMenuOpen(false)}
               href="/"
               className={`${
                 pathname === '/' ? 'bg-gray-900 ' : ''
@@ -236,6 +237,7 @@ const Navbar = () => {
               Home
             </Link>
             <Link
+              onClick={() => setIsMobilMenuOpen(false)}
               href="/properties"
               className={`${
                 pathname === '/properties' ? 'bg-gray-900 ' : ''
@@ -245,6 +247,7 @@ const Navbar = () => {
             </Link>
             {session && (
               <Link
+                onClick={() => setIsMobilMenuOpen(false)}
                 href="/properties/add"
                 className={`${
                   pathname === '/properties/add' ? 'bg-gray-900 ' : ''
