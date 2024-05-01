@@ -10,7 +10,7 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Navbar = () => {
   const { data: session } = useSession();
-
+  console.log('session: ', session)
   const [isMobileMenuOpen, setIsMobilMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
@@ -126,7 +126,7 @@ const Navbar = () => {
           {/* Right Side Menu (Logged In) */}
           {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-              {console.log('session is set')}
+              {console.log(session)}
               <Link href="messages.html" className="relative group">
                 <button
                   type="button"
