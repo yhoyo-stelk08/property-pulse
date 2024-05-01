@@ -15,6 +15,7 @@ const Navbar = () => {
   const [providers, setProviders] = useState(null);
   
   const pathname = usePathname();
+  const profileImage = session?.user?.image
   
   useEffect(() => {
     const setAuthProviders = async () => {
@@ -25,7 +26,6 @@ const Navbar = () => {
     setAuthProviders();
   }, []);
   
-  console.log(session);
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -167,8 +167,10 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full"
-                      src={profileDefault}
+                      src={profileImage || profileDefault}
                       alt=""
+                      width={40}
+                      height={40}
                     />
                   </button>
                 </div>
