@@ -16,7 +16,35 @@ const ProfilePage = () => {
   const profileEmail = session?.user?.email;
   const profileName = session?.user?.name;
 
-  const handleDeleteProperty = () => {}
+  const handleDeleteProperty = async (propertyId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this property?'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/properties/${propertyId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.status === 200) {
+        // remove the property from the properties state
+        const updatedProperties = properties.filter(
+          (property) => property._id !== propertyId
+        );
+        setProperties(updatedProperties);
+
+        alert('Property Deleted');
+      } else {
+        console.log('Failed to delete property');
+      }
+    } catch (error) {
+      console.log('Failed to delete property: ', error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserProperties = async (userId) => {
@@ -93,13 +121,11 @@ const ProfilePage = () => {
                       <p className="text-lg font-semibold">{property.name}</p>
                       <p className="text-gray-600">
                         Address:{' '}
-                        {
-                          property.location.street +
+                        {property.location.street +
                           ' ' +
                           property.location.city +
                           ' ' +
-                          property.location.state
-                        }
+                          property.location.state}
                       </p>
                     </div>
                     <div className="mt-2">
