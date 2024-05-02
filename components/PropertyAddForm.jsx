@@ -5,27 +5,27 @@ import { amenitiesArray } from '@/utils/const';
 
 const PropertyAddForm = () => {
   const [field, setField] = useState({
-    name: 'Test Property',
-    type: 'Apartment',
+    name: '',
+    type: '',
     description: '',
     location: {
       street: '',
-      city: 'Test city',
-      state: 'Test State',
+      city: '',
+      state: '',
       zipcode: '',
     },
-    beds: 2,
-    baths: 1,
-    square_feet: 1500,
+    beds: '',
+    baths: '',
+    square_feet: '',
     amenities: [],
     rates: {
-      nightly: 100,
-      weekly: 1100,
-      monthly: 4200,
+      nightly: '',
+      weekly: '',
+      monthly: '',
     },
     seller_info: {
       name: '',
-      email: 'test@example.com',
+      email: '',
       phone: '',
     },
     images: [],
