@@ -54,7 +54,7 @@ const PropertyEditForm = () => {
 
         setField(propertyData);
       } catch (error) {
-        toast.error('Failed to fetch property data')
+        toast.error('Failed to fetch property data');
         console.log(error);
       } finally {
         setLoading(false);
@@ -108,7 +108,29 @@ const PropertyEditForm = () => {
     }));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData(e.target);
+      console.log(formData);
+      const response = await fetch(`/api/properties/${id}`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (response.status === 200) {
+        router.push(`/properties/${id}`);
+      } else if (response.status === 401 || response.status === 403) {
+        toast.error('Permission denied');
+      } else {
+        toast.error('Failed to update the property data');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to update the property data');
+    }
+  };
 
   return (
     !loading && (
