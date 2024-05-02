@@ -1,5 +1,6 @@
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
+import { getUserSession } from '@/utils/getUserSession';
 
 // GET /api/properties
 export const GET = async (request) => {
@@ -18,6 +19,16 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
   try {
+    await connectDB();
+
+    const userSession = await getUserSession();
+
+    if (!userSession || !userSession.userId) {
+      return new Response('User ID is required', { status: 401 });
+    }
+
+    const { userId } = userSession;
+
     const formData = await request.formData();
 
     // Access all values from amenities and images
@@ -25,8 +36,8 @@ export const POST = async (request) => {
     const images = formData
       .getAll('images')
       .filter((image) => image.name !== '');
-
     // create propertyData object for database
+
     const propertyData = {
       type: formData.get('type'),
       name: formData.get('name'),
@@ -43,23 +54,28 @@ export const POST = async (request) => {
       baths: formData.get('baths'),
       amenities,
       rates: {
-        weekly: formData.get('rates.weekly'),
-        monthly: formData.get('rates.monthly'),
-        nightly: formData.get('rates.nightly'),
+        weekly: parseInt(formData.get('rates.weekly')),
+        monthly: parseInt(formData.get('rates.monthly')),
+        nightly: parseInt(formData.get('rates.nightly')),
       },
       seller_info: {
         name: formData.get('seller_info.name'),
         email: formData.get('seller_info.email'),
         phone: formData.get('seller_info.phone'),
       },
-      images,
+      owner: userId,
+      // images,
     };
 
-    console.log(propertyData)
-    // await connectDB();
-    return new Response(JSON.stringify({ message: 'Success' }), {
-      status: 200,
-    });
+    const newProperty = new Property(propertyData);
+    await newProperty.save();
+
+    return Response.redirect(
+      `${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`
+    );
+    // return new Response(JSON.stringify({ message: 'Success' }), {
+    //   status: 200,
+    // });
   } catch (error) {
     console.log(error);
     return new Response('Failed to add property', { status: 500 });
