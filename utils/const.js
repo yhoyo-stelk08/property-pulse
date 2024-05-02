@@ -59,4 +59,32 @@ export const amenitiesArray = [
     id: 'amenity_coffee_maker',
     value: 'Coffee Maker',
   },
+  {
+    id: 'amenity_outdoor_grill_bbq',
+    value: 'Outdoor Grill/BBQ',
+  },
+  {
+    id: 'amenity_fireplace',
+    value: 'Fireplace',
+  },
+  {
+    id: 'amenity_beach_access',
+    value: 'Beach Access',
+  },
+  {
+    id: 'amenity_hiking_access',
+    value: 'Hiking Trails Access',
+  },
+  {
+    id: 'amenity_pet_friendly',
+    value: 'Pet Friendly',
+  },
+  {
+    id: 'amenity_ski_storage',
+    value: 'Ski Equipment Storage',
+  },
+  {
+    id: 'amenity_mountain_view',
+    value: 'Mountain View',
+  },
 ];
