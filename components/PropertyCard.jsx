@@ -17,7 +17,7 @@ export const PropertyCard = ({ property }) => {
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={property.images[0]}
         width={0}
         height={0}
         sizes="100vw"
@@ -50,12 +50,12 @@ export const PropertyCard = ({ property }) => {
         </div>
 
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
-          {property.rates.nightly && (
+          {property.rates.nightly !== 0 && (
             <p>
               <FaMoneyBill  className='inline mr-2' /> Nightly
             </p>
           )}
-          {property.rates.weekly && (
+          {property.rates.weekly !== 0  && (
             <p>
               <FaMoneyBill className='inline mr-2' /> Weekly
             </p>
