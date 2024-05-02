@@ -60,7 +60,7 @@ export const PropertyCard = ({ property }) => {
               <FaMoneyBill className='inline mr-2' /> Weekly
             </p>
           )}
-          {property.rates.monthly && (
+          {property.rates.monthly !== 0  && (
             <p>
               <FaMoneyBill className='inline mr-2' /> Monthly
             </p>
