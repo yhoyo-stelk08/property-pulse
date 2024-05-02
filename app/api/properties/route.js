@@ -55,9 +55,9 @@ export const POST = async (request) => {
       baths: formData.get('baths'),
       amenities,
       rates: {
-        weekly: parseInt(formData.get('rates.weekly')),
-        monthly: parseInt(formData.get('rates.monthly')),
-        nightly: parseInt(formData.get('rates.nightly')),
+        weekly: parseInt(formData.get('rates.weekly')) || 0,
+        monthly: parseInt(formData.get('rates.monthly')) || 0,
+        nightly: parseInt(formData.get('rates.nightly')) || 0,
       },
       seller_info: {
         name: formData.get('seller_info.name'),
@@ -71,7 +71,7 @@ export const POST = async (request) => {
     const imageUploadPromises = [];
 
     for (const image of images) {
-      const imageBuffer = image.arrayBuffer();
+      const imageBuffer = await image.arrayBuffer();
       const imageArray = Array.from(new Uint8Array(imageBuffer));
       const imageData = Buffer.from(imageArray);
 
