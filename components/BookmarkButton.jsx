@@ -13,7 +13,6 @@ const BookmarkButton = ({ property }) => {
     if (!userId) {
       toast.error('U need to logged in to use bookmark property function');
     }
-    console.log(userId)
     try {
       // fetch from api route : POST /api/bookmarks
       const response = await fetch('/api/bookmarks', {
@@ -28,16 +27,23 @@ const BookmarkButton = ({ property }) => {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         toast.success(data.message);
-        setIsBookMarked(data.isBookmark)
+        setIsBookMarked(data.isBookmark);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Failed to bookmarked property.')
+      toast.error('Failed to bookmarked property.');
     }
   };
-  return (
+  return isBookmarked ? (
+    <button
+      onClick={handleClick}
+      className="bg-red-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
+    >
+      <FaBookmark className="mr-2"></FaBookmark> Remove Bookmark
+    </button>
+  ) : (
     <button
       onClick={handleClick}
       className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
