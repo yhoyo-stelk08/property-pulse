@@ -26,8 +26,9 @@ const BookmarkButton = ({ property }) => {
         }),
       });
 
-      if ((await response).status === 200) {
-        const data = (await response).json();
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data)
         toast.success(data.message);
         setIsBookMarked(data.isBookmark)
       }
