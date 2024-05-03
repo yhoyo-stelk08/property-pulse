@@ -1,4 +1,5 @@
 import React from 'react'
+import PropertySearchForm from './PropertySearchForm'
 
 const Hero = () => {
   return (
