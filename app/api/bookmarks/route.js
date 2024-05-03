@@ -10,11 +10,11 @@ export const POST = async (request) => {
     // connect to db
     await connectDB();
     // get property id from the request body
-    const { propertyId } = request.json();
+    const { propertyId } = await request.json();
     // get user session from server
-    const userSession = getUserSession();
+    const userSession = await getUserSession();
     // check if the session is set
-    if (!session || !session.userId) {
+    if (!userSession || !userSession.userId) {
       return new Response('You need to login to use bookmark', { status: 401 });
     }
 
