@@ -34,7 +34,6 @@ const PropertyContactForm = ({ property }) => {
       property: property._id,
     };
     setWasSubmitted(true);
-    console.log(data);
   };
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
