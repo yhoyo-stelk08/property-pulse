@@ -36,7 +36,9 @@ const MessageSchema = new Schema(
       default: false,
     },
   },
-  { timestamp: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Messages = models.Messages || model('Messages', MessageSchema);
