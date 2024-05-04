@@ -13,7 +13,7 @@ export const POST = async (request) => {
       await request.json();
     // get user session
     const userSession = await getUserSession();
-    console.log('userSession : ', userSession)
+
     if (!userSession || !userSession.userId) {
       return new Response(
         JSON.stringify({ message: 'You need to logged in' }),
