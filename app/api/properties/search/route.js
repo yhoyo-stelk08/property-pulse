@@ -1,5 +1,6 @@
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
+export const dynamic = 'force-dynamic';
 
 // GET /api/properties/search/?queryParams
 export const GET = async (request) => {
@@ -33,11 +34,11 @@ export const GET = async (request) => {
 
     const properties = await Property.find(query);
 
-    return new Response(properties, {
+    return new Response(JSON.stringify(properties), {
       status: 200,
     });
   } catch (error) {
     console.log(error);
-    return new Response('Something went wrong', { status: 500 });
+    return new Response('Failed to fetch search results in api ', { status: 500 });
   }
 };
