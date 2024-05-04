@@ -20,16 +20,18 @@ export const GET = async (request) => {
       );
     }
 
-    const { user } = userSession
+    const { user } = userSession;
 
-    let messages = await Messages.find({recipent: user.id}).populate('sender', 'name').populate('property', 'title')
+    let messages = await Messages.find({ recipent: user.id })
+      .populate('sender', 'username')
+      .populate('property', 'name');
     // console.log(messages)
 
-    if(!messages) {
-        messages = []
+    if (!messages) {
+      messages = [];
     }
 
-    return new Response(JSON.stringify(messages), {status: 200});
+    return new Response(JSON.stringify(messages), { status: 200 });
   } catch (error) {
     console.log('Error in fetching message for user', error);
     return new Response('Something went wrong', { status: 500 });
