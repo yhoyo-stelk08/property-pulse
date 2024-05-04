@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const PropertyContactForm = ({ property }) => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
@@ -23,7 +24,7 @@ const PropertyContactForm = ({ property }) => {
       };
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       name: messages.name,
@@ -33,7 +34,35 @@ const PropertyContactForm = ({ property }) => {
       recipent: property.owner,
       property: property._id,
     };
-    setWasSubmitted(true);
+
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.status === 200) {
+        toast.success(response.message);
+        setWasSubmitted(true);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(response.message);
+    } finally {
+      setMessages({
+        name: '',
+        email: '',
+        phone: '',
+        message: '',
+        recipent: '',
+        property: '',
+      });
+    }
   };
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">

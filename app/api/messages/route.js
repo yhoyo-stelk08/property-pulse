@@ -9,12 +9,16 @@ export const POST = async (request) => {
     // connect to db
     await connectDB();
     // deconstruct data from
-    const { name, email, phone, message, recipent, property } = request.json();
+    const { name, email, phone, message, recipent, property } =
+      await request.json();
     // get user session
-    const userSession = getUserSession();
+    const userSession = await getUserSession();
 
     if (!userSession || !userSession.userId) {
-      return new Response('User ID is required', { status: 401 });
+      return new Response(
+        JSON.stringify({ message: 'You need to logged in' }),
+        { status: 401 }
+      );
     }
 
     const { user } = userSession;
@@ -39,9 +43,11 @@ export const POST = async (request) => {
 
     await newMessage.save();
 
-    return new Response(JSON.stringify({message: 'Message has been sent'}), {status: 200});
+    return new Response(JSON.stringify({ message: 'Message has been sent' }), {
+      status: 200,
+    });
   } catch (error) {
     console.log(error);
-    return new Response('Error in sending message', {status: 500});
+    return new Response('Error in sending message', { status: 500 });
   }
 };
