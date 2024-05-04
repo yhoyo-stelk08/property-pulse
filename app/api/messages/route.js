@@ -3,6 +3,39 @@ import Messages from '@/models/Messages';
 import { getUserSession } from '@/utils/getUserSession';
 
 export const dynamic = 'force-dynamic';
+
+// GET /api/messages
+export const GET = async (request) => {
+  try {
+    // connect to db
+    await connectDB();
+
+    // get user session
+    const userSession = await getUserSession();
+
+    if (!userSession || !userSession.userId) {
+      return new Response(
+        JSON.stringify({ message: 'You need to logged in' }),
+        { status: 401 }
+      );
+    }
+
+    const { user } = userSession
+
+    let messages = await Messages.find({recipent: user.id}).populate('sender', 'name').populate('property', 'title')
+    // console.log(messages)
+
+    if(!messages) {
+        messages = []
+    }
+
+    return new Response(JSON.stringify(messages), {status: 200});
+  } catch (error) {
+    console.log('Error in fetching message for user', error);
+    return new Response('Something went wrong', { status: 500 });
+  }
+};
+
 // POST /api/messsages
 export const POST = async (request) => {
   try {
