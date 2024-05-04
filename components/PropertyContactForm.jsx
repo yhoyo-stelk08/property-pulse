@@ -43,16 +43,15 @@ const PropertyContactForm = ({ property }) => {
         },
         body: JSON.stringify(data),
       });
-
+      const dataObject = await response.json();
       if (response.status === 200) {
-        toast.success(response.message);
+        toast.success(dataObject.message);
         setWasSubmitted(true);
-      } else {
-        toast.error(response.message);
+      } else if (response.status === 400 || response.status === 401) {
+        toast.error(dataObject.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(response.message);
     } finally {
       setMessages({
         name: '',
