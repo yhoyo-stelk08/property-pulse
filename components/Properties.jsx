@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { PropertyCard } from '@/components/PropertyCard';
+import Pagination from '@/components/Pagination';
 import Spinner from '@/components/Spinner';
 
 const Properties = () => {
@@ -15,13 +16,15 @@ const Properties = () => {
   useEffect(() => {
     try {
       const fetchPropertiesData = async () => {
-        const response = await fetch(`/api/properties?page=${pagination.page}&pageSize=${pagination.pageSize}`);
+        const response = await fetch(
+          `/api/properties?page=${pagination.page}&pageSize=${pagination.pageSize}`
+        );
         const data = await response.json();
         // console.log(data.properties);
         setProperties(data.properties);
         setPagination((prevValue) => ({
-            ...prevValue,
-            totalItem: data.total
+          ...prevValue,
+          totalItem: data.total,
         }));
       };
 
@@ -31,7 +34,15 @@ const Properties = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [pagination]);
+
+  const handlePageChange = async (newPage) => {
+    setPagination((prevValue) => ({
+        ...prevValue,
+        page: newPage
+    }))
+  }
+
   return loading ? (
     <Spinner loading={loading} />
   ) : (
@@ -46,6 +57,7 @@ const Properties = () => {
             ))}
           </div>
         )}
+        <Pagination pagination={pagination} onPageChange={handlePageChange} />
       </div>
     </section>
   );
