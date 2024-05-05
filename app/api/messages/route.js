@@ -22,9 +22,17 @@ export const GET = async (request) => {
 
     const { user } = userSession;
 
-    let messages = await Messages.find({ recipent: user.id })
+    let readMessages = await Messages.find({ recipent: user.id, read: true })
+      .sort({ createdAt: -1 })
       .populate('sender', 'username')
       .populate('property', 'name');
+
+    let unreadMessages = await Messages.find({ recipent: user.id, read: false })
+      .sort({ createdAt: -1 })
+      .populate('sender', 'username')
+      .populate('property', 'name');
+
+    let messages = [...unreadMessages, ...readMessages];
     // console.log(messages)
 
     if (!messages) {
