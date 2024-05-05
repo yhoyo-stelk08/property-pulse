@@ -25,7 +25,7 @@ export const PUT = async (request, { params }) => {
 
     const { userId } = userSession;
 
-    const message = await Message.findById(id);
+    const message = await Messages.findById(id);
 
     if (!message) {
       return new Response('Message not found', { status: 404 });
