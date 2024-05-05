@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 const UnreadMessageCount = ({ session }) => {
-  const [unreadCount, setUnreadCount] = useState(0);
+  const { unreadCount, setUnreadCount } = useGlobalContext();
   const userId = session?.user?.id;
 
   // fetch unread message count from API
