@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const Message = ({ message }) => {
@@ -46,7 +46,7 @@ const Message = ({ message }) => {
   if (isDeleted) {
     return null;
   }
-  
+
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
       {!isRead && (
