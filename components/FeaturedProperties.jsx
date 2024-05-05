@@ -1,4 +1,9 @@
-const FeaturedProperties = () => {
+import { fetchProperties } from '@/utils/request';
+
+const FeaturedProperties = async () => {
+  const properties = await fetchProperties({showFeatured: true});
+  console.log(properties)
+
   return (
     <section className="bg-blue-50 px-4 pt-6 pb-10">
       <div className="container-xl lg:container m-auto">
