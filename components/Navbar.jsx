@@ -176,6 +176,7 @@ const Navbar = () => {
                       alt=""
                       width={40}
                       height={40}
+                      priority
                     />
                   </button>
                 </div>
