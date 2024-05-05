@@ -2,23 +2,32 @@
 import { useState, useEffect } from 'react';
 import { PropertyCard } from '@/components/PropertyCard';
 import Spinner from '@/components/Spinner';
-import { fetchProperties } from '@/utils/request';
 
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 6,
+    totalItem: 0,
+  });
 
   useEffect(() => {
     try {
       const fetchPropertiesData = async () => {
-        const propertiesData = await fetchProperties();
-        // console.log(propertiesData);
-        setProperties(propertiesData);
+        const response = await fetch(`/api/properties?page=${pagination.page}&pageSize=${pagination.pageSize}`);
+        const data = await response.json();
+        // console.log(data.properties);
+        setProperties(data.properties);
+        setPagination((prevValue) => ({
+            ...prevValue,
+            totalItem: data.total
+        }));
       };
 
       fetchPropertiesData();
     } catch (error) {
-        console.log('Failed to fetch properties: ',error);
+      console.log('Failed to fetch properties: ', error);
     } finally {
       setLoading(false);
     }
